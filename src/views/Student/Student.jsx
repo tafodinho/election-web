@@ -18,10 +18,14 @@ class Student extends Component {
     componentWillMount() {
         this.props.getStudentsRequest();
     }
+
+    shouldComponentUpdate() {
+        return true;
+    }
   render() {
       const {
           students
-      } = this.props.students;
+      } = this.props;
 
       console.log(students);
     return (
@@ -59,7 +63,7 @@ class Student extends Component {
                             <td>{prop.student.level}</td>
 
                             <td>
-                                <Link to={{ pathname: "/dashboard/student-edit/"+prop.id, data: prop }}><button type="button" class="btn btn-primary">Edit</button></Link>
+                                <Link to={"/dashboard/student-edit/"+prop.id}><button type="button" class="btn btn-primary">Edit</button></Link>
                             </td>
 
                             <td><button type="button" class="btn btn-danger">Delete</button></td>
@@ -84,7 +88,7 @@ const mapDispatchToProps = {
 
 const mapStateProps = (state) => {
     return {
-        students: state.StudentReducer
+        students: state.StudentReducer.students
     }
 }
 export default connect(mapStateProps, mapDispatchToProps)(Student);

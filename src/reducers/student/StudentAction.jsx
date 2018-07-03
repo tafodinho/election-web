@@ -18,7 +18,7 @@ export function getStudents(payload) {
 
 export function getStudent(payload) {
     return {
-        type: GET_STUDENTS,
+        type: GET_STUDENT,
         payload
     }
 }
@@ -87,7 +87,7 @@ export function createStudentRequest(data) {
 
 export function updateStudentRequest(data, id) {
     return dispatch => {
-        return axios.put(basePath + '/sudents/'+id, data).then(
+        return axios.put(basePath + '/students/'+id, data).then(
             (res) => {
                 dispatch(updateStudent(res.data))
                 return res;
@@ -101,7 +101,7 @@ export function updateStudentRequest(data, id) {
 
 export function deleteStudentRequest(id) {
     return dispatch => {
-        return axios.delte(basePath + '/student/'+id).then(
+        return axios.delte(basePath + '/students/'+id).then(
             (res) => {
                 dispatch(deleteStudent(res.data))
                 return res;

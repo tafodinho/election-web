@@ -43,10 +43,9 @@ class LoginForm extends Component{
             console.log(this.state);
             this.props.loginRequest(this.state).then(
                 (res) => {
-                    console.log(res);
-                    if(!isEmpty(res)) {
-                        this.context.router.history.push('/dashboard')
-                    }
+                    console.log("DKJKL", res);
+                        this.context.router.history.push('/dashboard/dashboard')
+
                 },
                 (err) => {
 
@@ -62,7 +61,7 @@ class LoginForm extends Component{
         return (
             <form onSubmit={this.onSubmit} className="form-signin">
               <div className="text-center mb-4">
-                  
+
                 <h1 className="h3 mb-3 font-weight-normal">Login Page</h1>
                 <p>Welcome to the elction management platformm</p>
               </div>

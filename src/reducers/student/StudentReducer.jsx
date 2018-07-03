@@ -4,7 +4,8 @@ import {
     CREATE_STUDENT,
     UPDATE_STUDENT,
     DELETE_STUDENT,
-    GET_STUDENTS
+    GET_STUDENTS,
+    GET_STUDENT
 } from './StudentAction';
 
 let initialData = {
@@ -12,13 +13,22 @@ let initialData = {
     deleteSuccess: false,
     updateSuccess: false,
     getStudentsSuccess: false,
-    students: []
+    getStudentSuccess: false,
+    students: [],
+    student: {}
 }
-function StudentReducer (data = initialData, action) {
+function StudentReducer (state = initialData, action) {
 
     switch (action.type) {
+        case GET_STUDENT:
+            return {
+                ...state,
+                getStudentSuccess: true,
+                student: action.payload
+            }
         case GET_STUDENTS:
             return {
+                ...state,
                 getStudentsSuccess: true,
                 students: action.payload
             }
@@ -37,7 +47,7 @@ function StudentReducer (data = initialData, action) {
                 deleteSuccess: true
             }
         default:
-            return data
+            return state
 
     }
 }

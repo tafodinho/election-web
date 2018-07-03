@@ -15,6 +15,12 @@ import { UserCard } from "components/UserCard/UserCard.jsx";
 import Button from "components/CustomButton/CustomButton.jsx";
 
 import avatar from "assets/img/faces/face-3.jpg";
+import {
+    getStudentRequest,
+    updateStudentRequest
+} from '../../reducers/student/StudentAction';
+
+import { connect } from 'react-redux';
 
 const data = [
     {"label" : "select Me", "value" : "1"},
@@ -26,6 +32,7 @@ class StudentEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: "",
             username: "",
             name: "",
             matricule: "",
@@ -35,27 +42,41 @@ class StudentEdit extends Component {
             staff: true,
             password: ""
         }
+
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+
     }
 
     componentWillMount() {
-        const {
-            username,
-            password,
-            student,
-            staff,
-            email
-        } = this.props.location.data;
 
-        this.setState({
-            username: username,
-            name: student.name,
-            matricule: student.matricule,
-            level: student.level,
-            department: student.department,
-            email: email,
-            staff: staff,
-            password: password
-        })
+        const id = this.props.match.params.data;
+
+        this.props.getStudentRequest(id).then(
+            res => {
+                this.setState({
+                    id,
+                    username: res.data.username,
+                    name: res.data.student.name,
+                    matricule: res.data.student.matricule,
+                    level: res.data.student.level,
+                    department: res.data.student.department,
+                    email: res.data.email,
+                    staff: res.data.student,
+                })
+            }
+        );
+
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        console.log("Zumbie", this.state)
+        this.props.updateStudentRequest(this.state, this.state.id)
+    }
+
+    onChange(e) {
+        this.setState({[e.target.name]: e.target.value})
     }
 
   render() {
@@ -200,4 +221,7 @@ class StudentEdit extends Component {
   }
 }
 
-export default StudentEdit;
+export default connect(null, {
+                                getStudentRequest,
+                                updateStudentRequest
+                            })(StudentEdit);
