@@ -6,47 +6,47 @@ import Card from "components/Card/Card.jsx";
 import { thArray, tdArray } from "variables/Variables.jsx";
 import { connect } from "react-redux";
 
-import { getStudentsRequest, deleteStudentRequest } from "reducers/student/StudentAction";
+import { getElectionSessionsRequest, deleteElectionSessionRequest } from "reducers/ElectionSession/ElectionSessionAction";
 
-class Student extends Component {
+class ElectionSession extends Component {
     constructor(props) {
         super(props)
         this.state = {
 
         }
 
-        this.deleteStudent = this.deleteStudent.bind(this);
+        this.deleteElectionSession = this.deleteElectionSession.bind(this);
     }
     componentWillMount() {
-        this.props.getStudentsRequest();
+        this.props.getElectionSessionsRequest();
     }
 
     shouldComponentUpdate() {
         return true;
     }
 
-    deleteStudent(id) {
+    deleteElectionSession(id) {
         const confirm = window.confirm("Delete student?");
 
         if(confirm) {
-            this.props.deleteStudentRequest(id);
+            this.props.deleteElectionSessionRequest(id);
         }
 
     }
   render() {
       const {
-          students
+          electionSessions
       } = this.props;
 
-      console.log(students);
+      console.log(electionSessions);
     return (
       <div className="content">
         <Grid fluid>
           <Row>
             <Col md={12}>
-              <Link to="/dashboard/student-add/"><button type="button" class="btn btn-success">Add Student</button></Link>
+              <Link to="/dashboard/student-add/"><button type="button" class="btn btn-success">Add ElectionSession</button></Link>
               <Card
-                title="List of Student"
+                title="List of ElectionSession"
                 category=""
                 ctTableFullWidth
                 ctTableResponsive
@@ -62,22 +62,22 @@ class Student extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {students.map((prop, key) => {
+                      {electionSessions.map((prop, key) => {
                         if(prop.is_staff)
                             return null
                         return (
                           <tr key={key}>
-                            <td>{prop.student.matricule}</td>
-                            <td>{prop.student.name}</td>
-                            <td>{prop.student.department}</td>
+                            <td>{prop.electionSession.matricule}</td>
+                            <td>{prop.electionSession.name}</td>
+                            <td>{prop.electionSession.department}</td>
                             <td>{prop.email}</td>
-                            <td>{prop.student.level}</td>
+                            <td>{prop.electionSession.level}</td>
 
                             <td>
                                 <Link to={"/dashboard/student-edit/"+prop.id}><button type="button" class="btn btn-primary">Edit</button></Link>
                             </td>
 
-                            <td><button type="button" class="btn btn-danger" onClick={(e) => this.deleteStudent(prop.id)}>Delete</button></td>
+                            <td><button type="button" class="btn btn-danger" onClick={(e) => this.deleteElectionSession(prop.id)}>Delete</button></td>
                           </tr>
                         );
                       })}
@@ -94,13 +94,13 @@ class Student extends Component {
 }
 
 const mapDispatchToProps = {
-    getStudentsRequest,
-    deleteStudentRequest
+    getElectionSessionsRequest,
+    deleteElectionSessionRequest
 }
 
 const mapStateProps = (state) => {
     return {
-        students: state.StudentReducer.students
+        electionSessions: state.ElectionSessionReducer.electionSessions
     }
 }
-export default connect(mapStateProps, mapDispatchToProps)(Student);
+export default connect(mapStateProps, mapDispatchToProps)(ElectionSession);

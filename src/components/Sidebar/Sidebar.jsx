@@ -9,6 +9,7 @@ import logo from "assets/img/reactlogo.png";
 import dashboardRoutes from "routes/dashboard.jsx";
 import { connect } from "react-redux";
 import { isEqual } from 'lodash/isEqual';
+import { isAdmin, getUserId } from "components/common/Auth";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -29,9 +30,11 @@ class Sidebar extends Component {
   }
   render() {
      const {
-         isAdmin,
          isAuthenticated
-     } = this.props
+     } = this.props;
+
+     const admin = isAdmin();
+     console.log("TUMA", admin)
 
     const sidebarBackground = {
       backgroundImage: "url(" + imagine + ")"
@@ -68,7 +71,7 @@ class Sidebar extends Component {
                         <HeaderLinks />
                         : null}
                         {dashboardRoutes.map((prop, key) => {
-                            if(!isAdmin && prop.name === 'Students') {
+                            if(!admin) {
                                 console.log("ADMIN", this.props)
                                 prop.admin = false
                             }
@@ -105,7 +108,7 @@ class Sidebar extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAdmin: state.LoginReducer.isAdmin,
+        isAdmin: state.LoginReducer.user.is_staff,
         isAuthenticated: state.LoginReducer.isAuthenticated
     }
 }

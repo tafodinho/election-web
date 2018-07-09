@@ -34,16 +34,19 @@ function StudentReducer (state = initialData, action) {
             }
         case CREATE_STUDENT:
             return {
+                ...state,
                 createSuccess: true,
                 students: action.payload
             }
         case UPDATE_STUDENT:
             return {
+                ...state,
                 updateSuccess: true,
                 students: action.payload,
             }
         case DELETE_STUDENT:
             return {
+                ...state,
                 deleteSuccess: true
             }
         default:

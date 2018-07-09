@@ -4,7 +4,10 @@ import { Grid, Row, Col } from "react-bootstrap";
 
 import { Card } from "components/Card/Card.jsx";
 import { StatsCard } from "components/StatsCard/StatsCard.jsx";
+import { ElectionCard } from "components/ElectionCard/ElectionCard";
 import { Tasks } from "components/Tasks/Tasks.jsx";
+import { isAdmin, getUserId } from "components/common/Auth";
+
 import {
   dataPie,
   legendPie,
@@ -17,8 +20,36 @@ import {
   responsiveBar,
   legendBar
 } from "variables/Variables.jsx";
+import { createVoteRequest } from 'reducers/Vote/VoteAction';
+import { getCandidatesRequest } from 'reducers/Candidates/CandidateAction';
+
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            candidates: [
+
+            ],
+            vote: {
+                student: "",
+                candidate: "",
+            }
+        }
+
+        this.onClick = this.onClick.bind(this);
+    }
+
+    componentWillMount() {
+        const id = getUserId();
+        this.setState({vote: {student: id}})
+        this.props.getCandidatesRequest()
+        .then(res => {
+            this.setState({candidates : res.data})
+        })
+    }
+
   createLegend(json) {
     var legend = [];
     for (var i = 0; i < json["names"].length; i++) {
@@ -29,131 +60,35 @@ class Dashboard extends Component {
     }
     return legend;
   }
+
+  onClick(e) {
+      console.log("STATE", this.state)
+      // this.props.createVoteRequest(this.state);
+  }
+
   render() {
+      const {
+          candidates
+      } = this.state;
+
     return (
       <div className="content">
         <Grid fluid>
           <Row>
-            <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-server text-warning" />}
-                statsText="Capacity"
-                statsValue="105GB"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-wallet text-success" />}
-                statsText="Revenue"
-                statsValue="$1,345"
-                statsIcon={<i className="fa fa-calendar-o" />}
-                statsIconText="Last day"
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="Errors"
-                statsValue="23"
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText="In the last hour"
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <StatsCard
-                bigIcon={<i className="fa fa-twitter text-info" />}
-                statsText="Followers"
-                statsValue="+45"
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={8}>
-              <Card
-                statsIcon="fa fa-history"
-                id="chartHours"
-                title="Users Behavior"
-                category="24 Hours performance"
-                stats="Updated 3 minutes ago"
-                content={
-                  <div className="ct-chart">
-                    <ChartistGraph
-                      data={dataSales}
-                      type="Line"
-                      options={optionsSales}
-                      responsiveOptions={responsiveSales}
-                    />
-                  </div>
-                }
-                legend={
-                  <div className="legend">{this.createLegend(legendSales)}</div>
-                }
-              />
-            </Col>
-            <Col md={4}>
-              <Card
-                statsIcon="fa fa-clock-o"
-                title="Email Statistics"
-                category="Last Campaign Performance"
-                stats="Campaign sent 2 days ago"
-                content={
-                  <div
-                    id="chartPreferences"
-                    className="ct-chart ct-perfect-fourth"
-                  >
-                    <ChartistGraph data={dataPie} type="Pie" />
-                  </div>
-                }
-                legend={
-                  <div className="legend">{this.createLegend(legendPie)}</div>
-                }
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6}>
-              <Card
-                id="chartActivity"
-                title="2014 Sales"
-                category="All products including Taxes"
-                stats="Data information certified"
-                statsIcon="fa fa-check"
-                content={
-                  <div className="ct-chart">
-                    <ChartistGraph
-                      data={dataBar}
-                      type="Bar"
-                      options={optionsBar}
-                      responsiveOptions={responsiveBar}
-                    />
-                  </div>
-                }
-                legend={
-                  <div className="legend">{this.createLegend(legendBar)}</div>
-                }
-              />
-            </Col>
-
-            <Col md={6}>
-              <Card
-                title="Tasks"
-                category="Backend development"
-                stats="Updated 3 minutes ago"
-                statsIcon="fa fa-history"
-                content={
-                  <div className="table-full-width">
-                    <table className="table">
-                      <Tasks />
-                    </table>
-                  </div>
-                }
-              />
-            </Col>
+              {candidates.map((prop, key) => {
+                  return (
+                      <Col lg={3} sm={6}>
+                        <ElectionCard
+                          bigIcon={<i className="pe-7s-graph1 text-success" />}
+                          statsText={prop.student.name}
+                          statsValue="105"
+                          statsIcon={prop.position}
+                          statsIconText="Updated now"
+                          onClick={this.onClick}
+                        />
+                      </Col>
+                  )
+              })}
           </Row>
         </Grid>
       </div>
@@ -161,4 +96,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default connect(null, {createVoteRequest, getCandidatesRequest})(Dashboard);

@@ -14,17 +14,13 @@ function LoginReducer (data = initialData, action) {
 
     switch (action.type) {
         case SET_CURRENT_USER:
-            const token = action.user.password;
-            if(!isEmpty(token)) {
-                localStorage.setItem('token', token);
-            }
             return {
                 isAdmin: action.user.isAdmin,
                 isAuthenticated: !isEmpty(action.user),
                 user: action.user
             }
         case LOGOUT_USER:
-            localStorage.removeItem('token');
+            localStorage.removeItem('state');
             return {
                 isAuthenticated: false,
             }

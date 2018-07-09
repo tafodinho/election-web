@@ -1,53 +1,53 @@
 import axios from 'axios';
 
-export const CREATE_STUDENT = "CREATE_STUDENT";
-export const UPDATE_STUDENT = "UPDATE_STUDENT";
-export const DELETE_STUDENT = "DELETE_STUDENT";
-export const GET_STUDENTS = "GET_STUDENTS";
-export const GET_STUDENT = "GET_STUDENT";
+export const CREATE_VOTE = "CREATE_VOTE";
+export const UPDATE_VOTE = "UPDATE_VOTE";
+export const DELETE_VOTE = "DELETE_VOTE";
+export const GET_VOTES = "GET_VOTES";
+export const GET_VOTE = "GET_VOTE";
 // export const LOGIN_FAILURE = "LOGIN_FAILURE"
 
 const basePath = 'http://127.0.0.1:8000';
 
-export function getStudents(payload) {
+export function getVotes(payload) {
     return {
-        type: GET_STUDENTS,
+        type: GET_VOTES,
         payload
     }
 }
 
-export function getStudent(payload) {
+export function getVote(payload) {
     return {
-        type: GET_STUDENT,
+        type: GET_VOTE,
         payload
     }
 }
 
-export function createStudent(payload) {
+export function createVote(payload) {
     return {
-        type: CREATE_STUDENT,
+        type: CREATE_VOTE,
         payload
     }
 }
 
-export function updateStudent(payload) {
+export function updateVote(payload) {
     return {
-        type: UPDATE_STUDENT,
+        type: UPDATE_VOTE,
         payload
     }
 }
 
-export function deleteStudent() {
+export function deleteVote() {
     return {
-        type: DELETE_STUDENT,
+        type: DELETE_VOTE,
     }
 }
 
-export function getStudentsRequest() {
+export function getVotesRequest() {
     return dispatch => {
         return axios.get(basePath + '/users/').then(
             (res) => {
-                dispatch(getStudents(res.data))
+                dispatch(getVotes(res.data))
                 return res;
             },
             (err) => {
@@ -57,11 +57,11 @@ export function getStudentsRequest() {
     }
 }
 
-export function getStudentRequest(id) {
+export function getVoteRequest(id) {
     return dispatch => {
         return axios.get(basePath + '/users/'+id).then(
             (res) => {
-                dispatch(getStudent(res.data))
+                dispatch(getVote(res.data))
                 return res;
             },
             (err) => {
@@ -71,11 +71,11 @@ export function getStudentRequest(id) {
     }
 }
 
-export function createStudentRequest(data) {
+export function createVoteRequest(data) {
     return dispatch => {
         return axios.post(basePath + '/users/', data).then(
             (res) => {
-                dispatch(createStudent(res.data))
+                dispatch(createVote(res.data))
                 return res;
             },
             (err) => {
@@ -85,11 +85,11 @@ export function createStudentRequest(data) {
     }
 }
 
-export function updateStudentRequest(data, id) {
+export function updateVoteRequest(data, id) {
     return dispatch => {
-        return axios.put(basePath + '/students/'+id, data).then(
+        return axios.put(basePath + '/VOTEs/'+id, data).then(
             (res) => {
-                dispatch(updateStudent(res.data))
+                dispatch(updateVote(res.data))
                 return res;
             },
             (err) => {
@@ -99,12 +99,12 @@ export function updateStudentRequest(data, id) {
     }
 }
 
-export function deleteStudentRequest(id) {
+export function deleteVoteRequest(id) {
     return dispatch => {
         return axios.delete(basePath + '/users/'+id+'/')
         .then((res) => {
                 //console.log(res)
-                dispatch(deleteStudent(res.data))
+                dispatch(deleteVote(res.data))
                 return res;
         })
         // .catch((error) => {
