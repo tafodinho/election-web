@@ -87,7 +87,7 @@ export function createCandidateRequest(data) {
 
 export function updateCandidateRequest(data, id) {
     return dispatch => {
-        return axios.put(basePath + '/CANDIDATEs/'+id, data).then(
+        return axios.put(basePath + '/candidates/'+id, data).then(
             (res) => {
                 dispatch(updateCandidate(res.data))
                 return res;
@@ -101,7 +101,7 @@ export function updateCandidateRequest(data, id) {
 
 export function deleteCandidateRequest(id) {
     return dispatch => {
-        return axios.delete(basePath + '/users/'+id+'/')
+        return axios.delete(basePath + '/candidates/'+id+'/')
         .then((res) => {
                 //console.log(res)
                 dispatch(deleteCandidate(res.data))

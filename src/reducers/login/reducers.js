@@ -6,8 +6,8 @@ import {
 } from './actions';
 
 let initialData = {
-    isAdmin: true,
-    isAuthenticated: true,
+    isAdmin: false,
+    isAuthenticated: false,
     user: {}
 }
 function LoginReducer (data = initialData, action) {
@@ -15,6 +15,7 @@ function LoginReducer (data = initialData, action) {
     switch (action.type) {
         case SET_CURRENT_USER:
             return {
+                ...data,
                 isAdmin: action.user.isAdmin,
                 isAuthenticated: !isEmpty(action.user),
                 user: action.user
@@ -22,6 +23,7 @@ function LoginReducer (data = initialData, action) {
         case LOGOUT_USER:
             localStorage.removeItem('state');
             return {
+                ...data,
                 isAuthenticated: false,
             }
         default:

@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import { NavItem, Nav, NavDropdown, MenuItem } from "react-bootstrap";
+import { connect } from "react-redux";
+
+import { logoutRequest } from "reducers/login/actions";
 
 class HeaderLinks extends Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+    }
+    onClick(e) {
+        
+        this.props.logoutRequest();
+    }
   render() {
     const notification = (
       <div>
@@ -52,7 +63,7 @@ class HeaderLinks extends Component {
             <MenuItem divider />
             <MenuItem eventKey={2.5}>Separated link</MenuItem>
           </NavDropdown>
-          <NavItem eventKey={3} href="#">
+          <NavItem eventKey={3} href="#" onClick={this.onClick}>
             Log out
           </NavItem>
         </Nav>
@@ -61,4 +72,4 @@ class HeaderLinks extends Component {
   }
 }
 
-export default HeaderLinks;
+export default connect(null, {logoutRequest})(HeaderLinks);

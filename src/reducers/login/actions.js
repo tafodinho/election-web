@@ -32,3 +32,18 @@ export function loginRequest(data) {
         )
     }
 }
+
+export function logoutRequest() {
+    return dispatch => {
+        localStorage.removeItem('state');
+        return axios.post(basePath + '/users/logout/').then(
+            (res) => {
+                dispatch(logoutUser(res.data))
+                return res;
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+    }
+}

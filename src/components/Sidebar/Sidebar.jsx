@@ -33,8 +33,7 @@ class Sidebar extends Component {
          isAuthenticated
      } = this.props;
 
-     const admin = isAdmin();
-     console.log("TUMA", admin)
+     console.log("TUMA", isAdmin())
 
     const sidebarBackground = {
       backgroundImage: "url(" + imagine + ")"
@@ -71,11 +70,30 @@ class Sidebar extends Component {
                         <HeaderLinks />
                         : null}
                         {dashboardRoutes.map((prop, key) => {
-                            if(!admin) {
-                                console.log("ADMIN", this.props)
-                                prop.admin = false
-                            }
-                            if (!prop.redirect && prop.admin && !prop.hidden)
+                            console.log("ISADMIN", isAdmin())
+                            if (!prop.redirect && isAdmin() && prop.admin && !prop.hidden)
+                                return (
+                                    <li
+                                        className={
+                                            prop.upgrade
+                                            ? "active active-pro"
+                                            : this.activeRoute(prop.path)
+                                        }
+                                        key={key}
+                                        >
+                                        <NavLink
+                                            to={prop.path}
+                                            className="nav-link"
+                                            activeClassName="active"
+                                            >
+                                            <i className={prop.icon} />
+                                            <p>
+                                                {prop.name}
+                                            </p>
+                                        </NavLink>
+                                    </li>
+                                );
+                            else if(!prop.redirect && !isAdmin() && prop.student && !prop.hidden)
                                 return (
                                     <li
                                         className={

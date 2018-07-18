@@ -5,7 +5,8 @@ export const UPDATE_VOTE = "UPDATE_VOTE";
 export const DELETE_VOTE = "DELETE_VOTE";
 export const GET_VOTES = "GET_VOTES";
 export const GET_VOTE = "GET_VOTE";
-// export const LOGIN_FAILURE = "LOGIN_FAILURE"
+export const GET_VOTE_RESULT = "GET_VOTE_RESULT"
+export const GET_VOTE_CANDIDATES = "GET_VOTE_CANDIDATES"
 
 const basePath = 'http://127.0.0.1:8000';
 
@@ -42,10 +43,21 @@ export function deleteVote() {
         type: DELETE_VOTE,
     }
 }
-
+export function getVoteResult(payload) {
+    return {
+        type: GET_VOTE_RESULT,
+        payload
+    }
+}
+export function getVoteCandidatesResult(payload) {
+    return {
+        type: GET_VOTE_CANDIDATES,
+        payload
+    }
+}
 export function getVotesRequest() {
     return dispatch => {
-        return axios.get(basePath + '/users/').then(
+        return axios.get(basePath + '/votes/').then(
             (res) => {
                 dispatch(getVotes(res.data))
                 return res;
@@ -56,10 +68,35 @@ export function getVotesRequest() {
         )
     }
 }
-
+export function getVoteResultRequest() {
+    return dispatch => {
+        return axios.get(basePath + '/votes/result/').then(
+            (res) => {
+                dispatch(getVoteResult(res.data))
+                return res;
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+    }
+}
+export function getVoteCandidatesRequest(position) {
+    return dispatch => {
+        return axios.get(basePath + '/votes/candidates/?position=' + position).then(
+            (res) => {
+                dispatch(getVoteCandidatesResult(res.data))
+                return res;
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+    }
+}
 export function getVoteRequest(id) {
     return dispatch => {
-        return axios.get(basePath + '/users/'+id).then(
+        return axios.get(basePath + '/votes/'+id).then(
             (res) => {
                 dispatch(getVote(res.data))
                 return res;
@@ -73,13 +110,15 @@ export function getVoteRequest(id) {
 
 export function createVoteRequest(data) {
     return dispatch => {
-        return axios.post(basePath + '/users/', data).then(
-            (res) => {
+        console.log("DATA", data);
+        return axios.post(basePath + '/votes/', data)
+        .then((res) => {
+                console.log(res)
                 dispatch(createVote(res.data))
                 return res;
             },
-            (err) => {
-                console.log(err)
+            (res) => {
+                console.log(res)
             }
         )
     }
@@ -87,7 +126,7 @@ export function createVoteRequest(data) {
 
 export function updateVoteRequest(data, id) {
     return dispatch => {
-        return axios.put(basePath + '/VOTEs/'+id, data).then(
+        return axios.put(basePath + '/votes/'+id, data).then(
             (res) => {
                 dispatch(updateVote(res.data))
                 return res;
@@ -101,7 +140,7 @@ export function updateVoteRequest(data, id) {
 
 export function deleteVoteRequest(id) {
     return dispatch => {
-        return axios.delete(basePath + '/users/'+id+'/')
+        return axios.delete(basePath + '/votes/'+id+'/')
         .then((res) => {
                 //console.log(res)
                 dispatch(deleteVote(res.data))

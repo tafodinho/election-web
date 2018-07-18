@@ -16,7 +16,7 @@ import "./assets/css/pe-icon-7-stroke.css";
 
 import { saveState } from './localStorage';
 
-//import "./assets/css/index.css";
+import "./assets/css/index.css";
 
 const hist = createBrowserHistory();
 

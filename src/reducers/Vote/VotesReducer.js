@@ -5,7 +5,9 @@ import {
     UPDATE_VOTE,
     DELETE_VOTE,
     GET_VOTES,
-    GET_VOTE
+    GET_VOTE,
+    GET_VOTE_RESULT,
+    GET_VOTE_CANDIDATES
 } from './VoteAction';
 
 let initialData = {
@@ -14,18 +16,15 @@ let initialData = {
     updateSuccess: false,
     getVotesSuccess: false,
     getVoteSuccess: false,
+    candidates: [],
     votes: [],
-    vote: {}
+    vote: [],
+
+
 }
 function VoteReducer (state = initialData, action) {
 
     switch (action.type) {
-        case GET_VOTE:
-            return {
-                ...state,
-                getVoteSuccess: true,
-                vote: action.payload
-            }
         case GET_VOTES:
             return {
                 ...state,
@@ -48,6 +47,16 @@ function VoteReducer (state = initialData, action) {
             return {
                 ...state,
                 deleteSuccess: true
+            }
+        case GET_VOTE_RESULT:
+            return {
+                ...state,
+                vote: action.payload
+            }
+        case GET_VOTE_CANDIDATES:
+            return {
+                ...state,
+                candidates: action.payload
             }
         default:
             return state

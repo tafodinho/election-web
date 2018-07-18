@@ -9,13 +9,19 @@ import Maps from "views/Maps/Maps";
 import Notifications from "views/Notifications/Notifications";
 import Upgrade from "views/Upgrade/Upgrade";
 import ElectionSession from "views/ElectionSession/ElectionSession";
+import Vote from "views/Votes/Votes";
+import Result from "views/Result/Result";
+import Candidate from "views/Candidate/Candidate";
+import CandidateAdd from "views/Candidate/CandidateAdd";
+import CandidateEdit from "views/Candidate/CandidateEdit";
 
 let dashboardRoutes = [
 
     {
         path: "/dashboard/dashboard",
         name: "Dashboard",
-        admin: true,
+        admin: false,
+        student: true,
         icon: "pe-7s-graph",
         component: Dashboard
     },
@@ -23,15 +29,23 @@ let dashboardRoutes = [
         path: "/dashboard/user",
         name: "User Profile",
         admin: true,
+        student: true,
         icon: "pe-7s-user",
         component: UserProfile
     },
     {
-        path: "/dashboard/table",
+        path: "/dashboard/students",
         name: "Students",
         admin: true,
         icon: "pe-7s-note2",
         component: Student
+    },
+    {
+        path: "/dashboard/candidates",
+        name: "Candidates",
+        admin: true,
+        icon: "pe-7s-note2",
+        component: Candidate
     },
     {
         path: "/dashboard/typography",
@@ -66,12 +80,42 @@ let dashboardRoutes = [
         component: StudentAdd
     },
     {
+        path: "/dashboard/candidate-edit/:data",
+        name: "Candidate Edit",
+        admin: true,
+        hidden: true,
+        component: CandidateEdit
+    },
+    {
+        path: "/dashboard/candidate-add",
+        name: "Candidate Add",
+        admin: true,
+        hidden: true,
+        component: CandidateAdd
+    },
+    {
         path: "/dashboard/election-session",
         name: "Election Session",
         admin: true,
         hidden: false,
-        icon: "pe-7s-hammer",
+        icon: "pe-7s-drawer",
         component: ElectionSession
+    },
+    {
+        path: "/dashboard/votes",
+        name: "Votes",
+        admin: true,
+        hidden: false,
+        icon: "pe-7s-hammer",
+        component: Vote
+    },
+    {
+        path: "/dashboard/result",
+        name: "Results",
+        admin: true,
+        hidden: false,
+        icon: "pe-7s-hammer",
+        component: Result
     },
     { redirect: true, path: "/", to: "/login", name: "Login Page" }
 ];

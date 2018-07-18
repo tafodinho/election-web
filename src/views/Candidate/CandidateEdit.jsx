@@ -16,9 +16,9 @@ import Button from "components/CustomButton/CustomButton.jsx";
 
 import avatar from "assets/img/faces/face-3.jpg";
 import {
-    getStudentRequest,
-    updateStudentRequest
-} from '../../reducers/student/StudentAction';
+    getCandidateRequest,
+    updateCandidateRequest
+} from '../../reducers/Candidates/CandidateAction';
 
 import { connect } from 'react-redux';
 
@@ -28,7 +28,7 @@ const data = [
     {"label" : "select you", "value" : "3"},
 ]
 
-class StudentEdit extends Component {
+class CandidateEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,7 +52,7 @@ class StudentEdit extends Component {
 
         const id = this.props.match.params.data;
 
-        this.props.getStudentRequest(id).then(
+        this.props.getCandidateRequest(id).then(
             res => {
                 this.setState({
                     id,
@@ -72,7 +72,7 @@ class StudentEdit extends Component {
     onSubmit(e) {
         e.preventDefault();
         console.log("Zumbie", this.state)
-        this.props.updateStudentRequest(this.state, this.state.id)
+        this.props.updateCandidateRequest(this.state, this.state.id)
     }
 
     onChange(e) {
@@ -196,7 +196,7 @@ class StudentEdit extends Component {
                   userName="michael24"
                   description={
                     <span>
-                      "Lamborghini Mercy <br /> Your chick she so thirsty <br /> I'm in that two seat Lambo"
+                      "Lamborghini Mercy <br /> Your chick she so thirsty <br /> Im in that two seat Lambo"
                     </span>
                   }
                   socials={
@@ -222,6 +222,6 @@ class StudentEdit extends Component {
 }
 
 export default connect(null, {
-                                getStudentRequest,
-                                updateStudentRequest
-                            })(StudentEdit);
+                                getCandidateRequest,
+                                updateCandidateRequest
+                            })(CandidateEdit);

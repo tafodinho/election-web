@@ -7,7 +7,7 @@ import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 
 import { style } from "variables/Variables.jsx";
-
+import {isAuth} from "components/common/Auth";
 import dashboardRoutes from "routes/dashboard.jsx";
 
 class Dashboard extends Component {
@@ -99,9 +99,13 @@ class Dashboard extends Component {
       this.refs.mainPanel.scrollTop = 0;
     }
   }
-  
+
   render() {
     console.log("DASH ROUTES", this.props);
+    console.log("AUTH", isAuth());
+    if(!isAuth()) {
+        return <Redirect to="/login" />;
+    }
     return (
       <div className="wrapper">
         <NotificationSystem ref="notificationSystem" style={style} />
