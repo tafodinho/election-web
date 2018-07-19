@@ -22,9 +22,8 @@ import avatar from "assets/img/faces/face-3.jpg";
 import { connect } from "react-redux";
 
 const data = [
-    {"label" : "select Me", "value" : "1"},
-    {"label" : "select Them", "value" : "2"},
-    {"label" : "select you", "value" : "3"},
+    {"label" : "Computer Engineering", "value" : "1"},
+    {"label" : "Electrical Engineering", "value" : "2"},
 ]
 
 class StudentAdd extends Component {

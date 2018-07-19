@@ -63,7 +63,7 @@ class LoginForm extends Component{
               <div className="text-center mb-4">
 
                 <h1 className="h3 mb-3 font-weight-normal">Login Page</h1>
-                <p>Welcome to the elction management platformm</p>
+                <p>Welcome to the election management platformm</p>
               </div>
 
               <TextFieldGroup

@@ -3,50 +3,50 @@ import { Grid, Row, Col, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Card from "components/Card/Card.jsx";
-import { thArray, tdArray } from "variables/Variables.jsx";
 import { connect } from "react-redux";
 
-import { getElectionSessionsRequest, deleteElectionSessionRequest } from "reducers/ElectionSession/ElectionSessionAction";
+import { getVotesRequest, deleteVoteRequest } from "reducers/Vote/VoteAction";
 
-class ElectionSession extends Component {
+const thArray = ["Vote Id", "Student Id", "Candidate Id", "Date"];
+
+class Vote extends Component {
     constructor(props) {
         super(props)
         this.state = {
 
         }
 
-        this.deleteElectionSession = this.deleteElectionSession.bind(this);
+        this.deleteVote = this.deleteVote.bind(this);
     }
     componentWillMount() {
-        this.props.getElectionSessionsRequest();
+        this.props.getVotesRequest();
     }
 
     shouldComponentUpdate() {
         return true;
     }
 
-    deleteElectionSession(id) {
+    deleteVote(id) {
         const confirm = window.confirm("Delete student?");
 
         if(confirm) {
-            this.props.deleteElectionSessionRequest(id);
+            this.props.deleteVoteRequest(id);
         }
 
     }
   render() {
       const {
-          electionSessions
+          votes
       } = this.props;
 
-      console.log(electionSessions);
+      console.log(votes);
     return (
       <div className="content">
         <Grid fluid>
           <Row>
             <Col md={12}>
-              <Link to="/dashboard/student-add/"><button type="button" class="btn btn-success">Add ElectionSession</button></Link>
               <Card
-                title="List of ElectionSession"
+                title="List of Vote"
                 category=""
                 ctTableFullWidth
                 ctTableResponsive
@@ -57,27 +57,18 @@ class ElectionSession extends Component {
                         {thArray.map((prop, key) => {
                           return <th key={key}>{prop}</th>;
                         })}
-                        <th>Edit</th>
-                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {electionSessions.map((prop, key) => {
+                      {votes.map((prop, key) => {
                         if(prop.is_staff)
                             return null
                         return (
                           <tr key={key}>
-                            <td>{prop.electionSession.matricule}</td>
-                            <td>{prop.electionSession.name}</td>
-                            <td>{prop.electionSession.department}</td>
-                            <td>{prop.email}</td>
-                            <td>{prop.electionSession.level}</td>
-
-                            <td>
-                                <Link to={"/dashboard/student-edit/"+prop.id}><button type="button" class="btn btn-primary">Edit</button></Link>
-                            </td>
-
-                            <td><button type="button" class="btn btn-danger" onClick={(e) => this.deleteElectionSession(prop.id)}>Delete</button></td>
+                            <td>{prop.id}</td>
+                            <td>{prop.student}</td>
+                            <td>{prop.candidate}</td>
+                            <td>{prop.date}</td>
                           </tr>
                         );
                       })}
@@ -94,13 +85,13 @@ class ElectionSession extends Component {
 }
 
 const mapDispatchToProps = {
-    getElectionSessionsRequest,
-    deleteElectionSessionRequest
+    getVotesRequest,
+    deleteVoteRequest
 }
 
 const mapStateProps = (state) => {
     return {
-        electionSessions: state.ElectionSessionReducer.electionSessions
+        votes: state.VoteReducer.votes,
     }
 }
-export default connect(mapStateProps, mapDispatchToProps)(ElectionSession);
+export default connect(mapStateProps, mapDispatchToProps)(Vote);

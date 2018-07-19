@@ -26,7 +26,7 @@ let dashboardRoutes = [
         component: Dashboard
     },
     {
-        path: "/dashboard/user",
+        path: "/dashboard/student-edit",
         name: "User Profile",
         admin: true,
         student: true,

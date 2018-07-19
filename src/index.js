@@ -31,7 +31,6 @@ ReactDOM.render(
             {indexRoutes.map((prop, key) => {
               return <Route path={prop.path} component={prop.component} key={key} />;
             })}
-
           </Switch>
       </Router>
     </Provider>,

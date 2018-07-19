@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Row, Col, Table } from "react-bootstrap";
+import { Grid, Row, Col, Table, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Card from "components/Card/Card.jsx";
@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import { getVoteResultRequest } from "reducers/Vote/VoteAction";
 
-const thArray = ["Matricule", "Name", "Department", "Level", "Votes"];
+const thArray = ["Matricule", "Name", "Department", "Category", "Level", "Votes"];
 
 class Result extends Component {
     constructor(props) {
@@ -15,6 +15,8 @@ class Result extends Component {
         this.state = {
 
         }
+
+        this.options = this.options.bind(this);
     }
     componentWillMount() {
         this.props.getVoteResultRequest();
@@ -24,7 +26,17 @@ class Result extends Component {
         return true;
     }
 
+    options() {
+        return (
+            <FormControl componentClass="select" placeholder="select" onChange={this.onChange}>
+                <option value="president">president</option>
+                <option value="vice-president">vice president</option>
+                <option value="secretary">secretary</option>
+                <option value="president">treasurer</option>
+            </FormControl>
 
+        )
+    }
   render() {
       const {
           votes
@@ -34,6 +46,12 @@ class Result extends Component {
     return (
       <div className="content">
         <Grid fluid>
+            <Row>
+                <FormGroup controlId="formControlsSelect">
+                  <ControlLabel>Select Category </ControlLabel>
+                    {this.options()}
+                </FormGroup>
+            </Row>
           <Row>
             <Col md={12}>
               <Card
@@ -59,6 +77,7 @@ class Result extends Component {
                             <td>{prop.matricule}</td>
                             <td>{prop.name}</td>
                             <td>{prop.department}</td>
+                            <td>{prop.position}</td>
                             <td>{prop.level}</td>
                             <td>{prop.vote}</td>
                           </tr>

@@ -84,6 +84,9 @@ class CandidateAdd extends Component {
 
   newArray(arr) {
       const newArray = (arr.map((prop, key) => {
+          if(prop.is_staff) {
+              return {label: "", value: ""}
+          }
          return {label: prop.student.name, value: prop.student.id}
       }))
 
@@ -96,7 +99,7 @@ class CandidateAdd extends Component {
       } = this.props;
       console.log("STUDENTS", this.props)
       const data1 = this.newArray(students);
-      
+
     return (
       <div className="content">
         <Grid fluid>
@@ -149,4 +152,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(CandidateAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(CandidateAdd);

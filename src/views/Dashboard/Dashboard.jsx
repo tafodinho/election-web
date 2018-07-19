@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ChartistGraph from "react-chartist";
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import { Card } from "components/Card/Card.jsx";
 import { StatsCard } from "components/StatsCard/StatsCard.jsx";
@@ -46,10 +47,7 @@ class Dashboard extends Component {
     }
 
     componentWillMount() {
-        this.props.getVoteResultRequest()
-        .then(res => {
-            this.setState({candidates : res.data})
-        })
+        this.props.getVoteResultRequest();
     }
 
   createLegend(json) {
@@ -75,48 +73,66 @@ class Dashboard extends Component {
   }
 
   onClick(e, id) {
+
       this.setState({vote: {student: getUserId(), candidate: id}, voted: !this.state.voted}, () => {
           this.props.createVoteRequest(this.state.vote)
           .then(res => {
                 console.log("VOTE RESPONSE", res)
+                this.props.getVoteResultRequest();
               }
           )
       });
       // this.props.createVoteRequest(this.state);
   }
   onChange(e) {
+      console.log("VALUE", e.target.value);
       this.props.getVoteCandidatesRequest(e.target.value);
   }
 
   render() {
       const {
-          candidates
+          candidates,
+          votes
       } = this.props;
-
+      if(isAdmin()) {
+          return <Redirect to="/dashboard/students" />;
+      }
+      console.log("CANDIDATES", candidates)
+      console.log("VOTES", votes);
     return (
       <div className="content">
         <Grid fluid>
             <Row>
                 <FormGroup controlId="formControlsSelect">
-                  <ControlLabel>Select </ControlLabel>
+                  <ControlLabel>Select Category </ControlLabel>
                     {this.options()}
                 </FormGroup>
             </Row>
           <Row>
               {candidates.map((prop, key) => {
                   return (
-                      <Col lg={3} sm={6}>
-                        <ElectionCard
-                          bigIcon={<i className="pe-7s-graph1 text-success" />}
-                          statsText={prop.name}
-                          statsValue={prop.vote}
-                          statsIcon={prop.position}
-                          voted={this.state.voted}
-                          statsIconText="Updated now"
-                          onClick={(e) => this.onClick(e, prop.id)}
-                        />
-                      </Col>
+                      votes.map((prop1, key) => {
+                          console.log("CANDIDATE ID", prop.id);
+                          console.log("RESULT ID", prop1.id);
+                          console.log(prop.id == prop1.id);
+                          if(prop1.id == prop.id) {
+                              return (
+                                  <Col lg={3} sm={6}>
+                                    <ElectionCard
+                                      bigIcon={<i className="pe-7s-graph1 text-success" />}
+                                      statsText={prop.name}
+                                      statsValue={prop1.vote}
+                                      statsIcon={prop.position}
+                                      voted={this.state.voted}
+                                      statsIconText="Updated now"
+                                      onClick={(e) => this.onClick(e, prop.id)}
+                                    />
+                                  </Col>
+                              )
+                          }
+                      })
                   )
+
               })}
           </Row>
         </Grid>
@@ -127,7 +143,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        candidates: state.VoteReducer.candidates
+        candidates: state.VoteReducer.candidates,
+        votes: state.VoteReducer.vote
     }
 }
 export default connect(mapStateToProps, {

@@ -76,8 +76,8 @@ class Dashboard extends Component {
       title: <span data-notify="icon" className="pe-7s-gift" />,
       message: (
         <div>
-          Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for
-          every web developer.
+          Welcome to <b>Election Voting Sytem</b> -a place to do allowed
+          you votings
         </div>
       ),
       level: level,
@@ -130,7 +130,7 @@ class Dashboard extends Component {
               if (prop.redirect)
                 return <Redirect from={prop.path} to={prop.to} key={key} />;
               return (
-                <Route path={prop.path} component={prop.component} key={key} />
+                <Route path={prop.path} component={prop.component} exact={true} key={key} />
               );
             })}
           </Switch>

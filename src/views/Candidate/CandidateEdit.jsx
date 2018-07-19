@@ -23,9 +23,18 @@ import {
 import { connect } from 'react-redux';
 
 const data = [
-    {"label" : "select Me", "value" : "1"},
-    {"label" : "select Them", "value" : "2"},
-    {"label" : "select you", "value" : "3"},
+    {"label" : "President", "value" : "1"},
+    {"label" : "Vice President", "value" : "2"},
+    {"label" : "Secretary", "value" : "3"},
+    {"label" : "Vice Secretary", "value" : "3"},
+    {"label" : "Treasurer", "value" : "3"},
+    {"label" : "Sport Delegate", "value" : "3"},
+]
+
+const data1 = [
+    {"label" : "Ngu suleman", "value" : "1"},
+    {"label" : "Brandon kitcha", "value" : "2"},
+    {"label" : "Bih Sonita", "value" : "3"},
 ]
 
 class CandidateEdit extends Component {
@@ -84,137 +93,38 @@ class CandidateEdit extends Component {
     return (
         <div className="content">
           <Grid fluid>
-            <Row>
-              <Col md={8}>
-                <Card
-                  title="Edit Profile"
-                  content={
+              <Row>
+                <Col md={12}>
+                  <Card
+                    title="Edit Candidate"
+                    content={
                     <form onSubmit={this.onSubmit}>
-                      <FormInputs
-                        ncols={["col-md-6", "col-md-6"]}
-                        proprieties={[
-                          {
-                            label: "Username",
-                            type: "text",
-                            bsClass: "form-control",
-                            placeholder: "Enter Username",
-                            value: this.state.username,
-                            name: "username",
-                            onChange: this.onChange
-                          },
-                          {
-                            label: "Name",
-                            type: "text",
-                            bsClass: "form-control",
-                            placeholder: "Enter Name",
-                            value: this.state.name,
-                            name: "name",
-                            onChange: this.onChange
-                          }
-                        ]}
-                      />
-                      <FormInputs
-                        ncols={["col-md-6", "col-md-6"]}
-                        proprieties={[
-                          {
-                            label: "Matricule",
-                            type: "text",
-                            bsClass: "form-control",
-                            placeholder: "Enter Matricule Number",
-                            value: this.state.matricule,
-                            name: "matricule",
-                            onChange: this.onChange
-                          },
-                          {
-                            label: "email",
-                            type: "email",
-                            bsClass: "form-control",
-                            placeholder: "Enter emal address",
-                            value: this.state.email,
-                            name: "email",
-                            onChange: this.onChange
-                          }
-                        ]}
-                      />
-                      <FormInputs
-                        ncols={["col-md-6", "col-md-6"]}
-                        proprieties={[
-                          {
-                            label: "Password",
-                            type: "password",
-                            bsClass: "form-control",
-                            placeholder: "Enter Password",
-                            value: this.state.password,
-                            name: "password",
-                            onChange: this.onChange
-                          },
-                          {
-                            label: "Level",
-                            type: "number",
-                            bsClass: "form-control",
-                            placeholder: "Enter Level",
-                            value: this.state.level,
-                            name: "level",
-                            onChange: this.onChange
-                          }
-                        ]}
-                      />
-                  <Col md={6}>
-                      <SelectInputs
-                          value={this.state.department}
-                          label = "Department"
-                          data = {data}
-                          name = "department"
-                          onChange = {this.onChange}
-                      />
-                  </Col>
-                  <Col md={6}>
-                      <FormGroup>
-                          <ControlLabel>Staff</ControlLabel>
-                        <Checkbox
-                            checked = {this.state.staff}
-                            value = {this.state.staff}
-                            name = "staff"
-                            onClick = {this.onClick}
-                            >
-                        </Checkbox>
-                      </FormGroup>
-                  </Col>
-                      <Button bsStyle="info" pullRight fill type="submit">
-                        Update Profile
-                      </Button>
-                      <div className="clearfix" />
-                    </form>
-                  }
-                />
-              </Col>
-              <Col md={4}>
-                <UserCard
-                  bgImage="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"
-                  avatar={"new"}
-                  name="Mike Andrew"
-                  userName="michael24"
-                  description={
-                    <span>
-                      "Lamborghini Mercy <br /> Your chick she so thirsty <br /> Im in that two seat Lambo"
-                    </span>
-                  }
-                  socials={
-                    <div>
-                      <Button simple>
-                        <i className="fa fa-facebook-square" />
-                      </Button>
-                      <Button simple>
-                        <i className="fa fa-twitter" />
-                      </Button>
-                      <Button simple>
-                        <i className="fa fa-google-plus-square" />
-                      </Button>
-                    </div>
-                  }
-                />
-              </Col>
-            </Row>
+
+                    <Col md={6}>
+                        <SelectInputs
+                            label = "Category   "
+                            data = {data}
+                            name = "department"
+                            onChange = {this.onChange}
+                        />
+                    </Col>
+                    <Col md={6}>
+                        <SelectInputs
+                            label = "Student"
+                            data = {data1}
+                            name = "department"
+                            onChange = {this.onChange}
+                        />
+                    </Col>
+                        <Button bsStyle="info" pullRight fill type="submit">
+                            Add Candidate
+                        </Button>
+                        <div className="clearfix" />
+                      </form>
+                    }
+                  />
+                </Col>
+              </Row>
           </Grid>
         </div>
     );
